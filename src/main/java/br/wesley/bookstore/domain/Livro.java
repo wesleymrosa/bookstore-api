@@ -9,10 +9,10 @@ import java.util.Objects;
 
 public class Livro implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final
+
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY);
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
     private String nome_autor;

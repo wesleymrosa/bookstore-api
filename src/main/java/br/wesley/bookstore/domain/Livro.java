@@ -9,7 +9,10 @@ import java.util.Objects;
 
 public class Livro implements Serializable {
     private static final long serialVersionUID = 1L;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

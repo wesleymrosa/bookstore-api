@@ -1,9 +1,7 @@
 package br.wesley.bookstore.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -19,9 +17,15 @@ public class Livro implements Serializable {
     private String titulo;
     private String nome_autor;
     private String texto;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+
     public Livro() {
+        super();
     }
 
     public Livro(String titulo, String nome_autor, String texto, Categoria categoria) {

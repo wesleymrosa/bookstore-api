@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/livros")
+@RequestMapping(value = "v1/livros")
 public class LivroController {
     private final LivroService livroService;
 

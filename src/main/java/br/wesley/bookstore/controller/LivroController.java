@@ -43,4 +43,10 @@ public class LivroController {
         Livro newObj = livroService.create(id_cat, obj);
         return ResponseEntity.status(201).body(newObj);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        livroService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

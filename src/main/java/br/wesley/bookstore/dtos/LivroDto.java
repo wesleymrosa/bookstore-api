@@ -1,6 +1,8 @@
 package br.wesley.bookstore.dtos;
 
 import br.wesley.bookstore.domain.Livro;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
@@ -9,6 +11,8 @@ public class LivroDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotEmpty(message = "Campo título é obrigatório !")
+    @Length(min = 3, max = 50, message = "O campo título deve ter entre 3 e 50 caracteres.")
     private String titulo;
 
     public LivroDto() {
@@ -18,7 +22,6 @@ public class LivroDto implements Serializable {
         this.id = livro.getId();
         this.titulo = livro.getTitulo();
     }
-
 
     public Long getId() {
         return id;

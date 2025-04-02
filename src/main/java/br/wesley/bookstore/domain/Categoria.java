@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +19,11 @@ public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Campo nome é obrigatório !")
+    @Length(min = 3, max = 100, message = "O campo nome deve ter entre 3 e 100 caracteres.")
     private String nome;
+    @NotEmpty(message = "Campo descrição é obrigatório !")
+    @Length(min = 3, max = 300, message = "O campo descrição deve ter entre 3 e 300 caracteres.")
     private String descricao;
 
     private List<Livro> livros = new ArrayList<>();

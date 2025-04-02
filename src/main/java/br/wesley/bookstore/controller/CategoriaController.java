@@ -3,12 +3,13 @@ package br.wesley.bookstore.controller;
 import br.wesley.bookstore.domain.Categoria;
 import br.wesley.bookstore.dtos.CategoriaDto;
 import br.wesley.bookstore.service.CategoriaService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "v1/categorias")
 public class CategoriaController {
@@ -35,13 +36,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> create(@RequestBody Categoria obj) {
+    public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj) {
         obj = categoriaService.create(obj);
         return ResponseEntity.ok().body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDto> update(@PathVariable Long id, @RequestBody CategoriaDto objDto) {
+    public ResponseEntity<CategoriaDto> update(@PathVariable Long id, @Valid @RequestBody CategoriaDto objDto) {
         Categoria newObj = categoriaService.update(id, objDto);
         return ResponseEntity.ok().body(new CategoriaDto(newObj));
     }

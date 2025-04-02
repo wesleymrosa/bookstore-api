@@ -2,6 +2,8 @@ package br.wesley.bookstore.dtos;
 
 import br.wesley.bookstore.domain.Categoria;
 import br.wesley.bookstore.domain.Livro;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +13,11 @@ public class CategoriaDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotEmpty(message = "Campo nome é obrigatório !")
+    @Length(min = 3, max = 100, message = "O campo nome deve ter entre 3 e 100 caracteres.")
     private String nome;
+    @NotEmpty(message = "Campo descrição é obrigatório !")
+    @Length(min = 3, max = 300, message = "O campo descrição deve ter entre 3 e 300 caracteres.")
     private String descricao;
 
     public CategoriaDto() {

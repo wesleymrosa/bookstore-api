@@ -22,7 +22,6 @@ public class CategoriaService {
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado " + id + ", tipo: " + Categoria.class.getName()));
     }
-
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
     }
@@ -31,11 +30,15 @@ public class CategoriaService {
         obj.setId(null);
         return categoriaRepository.save(obj);
     }
-
     public Categoria update(Long id, CategoriaDto objDto) {
         Categoria obj = findById(id);
-        obj.getNome(obj.getNome());
-        obj.setDescricao(obj.getDescricao());
+        obj.setNome(objDto.getNome());
+        obj.setDescricao(objDto.getDescricao());
         return categoriaRepository.save(obj);
+    }
+
+    public void delete(Long id) {
+        findById(id);
+        categoriaRepository.deleteById(id);
     }
 }

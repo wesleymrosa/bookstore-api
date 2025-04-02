@@ -1,5 +1,6 @@
 package br.wesley.bookstore.controller.exceptions;
 
+import br.wesley.bookstore.service.exceptions.DataIntegrityViolationException;
 import br.wesley.bookstore.service.exceptions.ObjectNotFoundException;
 import jakarta.servlet.ServletRequest;
 import org.springframework.http.HttpStatus;
@@ -18,5 +19,11 @@ public class ResourceExceptionHandler {
                 e.getMessage()
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e, ServletRequest request) {
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

@@ -3,6 +3,7 @@ package br.wesley.bookstore.service;
 import br.wesley.bookstore.domain.Categoria;
 import br.wesley.bookstore.dtos.CategoriaDto;
 import br.wesley.bookstore.repositories.CategoriaRepository;
+import br.wesley.bookstore.service.exceptions.DataIntegrityViolationException;
 import br.wesley.bookstore.service.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class CategoriaService {
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado " + id + ", tipo: " + Categoria.class.getName()));
     }
+
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
     }
@@ -30,6 +32,7 @@ public class CategoriaService {
         obj.setId(null);
         return categoriaRepository.save(obj);
     }
+
     public Categoria update(Long id, CategoriaDto objDto) {
         Categoria obj = findById(id);
         obj.setNome(objDto.getNome());
@@ -39,6 +42,11 @@ public class CategoriaService {
 
     public void delete(Long id) {
         findById(id);
-        categoriaRepository.deleteById(id);
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new br.wesley.bookstore.service.exceptions.
+                    DataIntegrityViolationException("Categoria não pode ser deletada ! Possui livros associados !");
+        }
     }
 }

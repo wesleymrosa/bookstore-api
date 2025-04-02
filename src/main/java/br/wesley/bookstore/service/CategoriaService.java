@@ -1,6 +1,7 @@
 package br.wesley.bookstore.service;
 
 import br.wesley.bookstore.domain.Categoria;
+import br.wesley.bookstore.dtos.CategoriaDto;
 import br.wesley.bookstore.repositories.CategoriaRepository;
 import br.wesley.bookstore.service.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,13 @@ public class CategoriaService {
 
     public Categoria create(Categoria obj) {
         obj.setId(null);
+        return categoriaRepository.save(obj);
+    }
+
+    public Categoria update(Long id, CategoriaDto objDto) {
+        Categoria obj = findById(id);
+        obj.getNome(obj.getNome());
+        obj.setDescricao(obj.getDescricao());
         return categoriaRepository.save(obj);
     }
 }

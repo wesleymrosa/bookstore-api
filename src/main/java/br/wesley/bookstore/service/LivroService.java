@@ -1,5 +1,6 @@
 package br.wesley.bookstore.service;
 
+import br.wesley.bookstore.domain.Categoria;
 import br.wesley.bookstore.domain.Livro;
 import br.wesley.bookstore.repositories.CategoriaRepository;
 import br.wesley.bookstore.repositories.LivroRepository;
@@ -42,5 +43,12 @@ public class LivroService {
         newObj.setTitulo(obj.setTitulo());
         newObj.setNome_autor(obj.getNome_autor());
         newObj.setTexto(obj.getTexto());
+    }
+
+    public Livro create(Long id_Cat, Livro obj) {
+        obj.setId(null);
+        Categoria cat = categoriaService.findById(id_Cat);
+        obj.setCategoria(cat);
+        return livroRepository.save(obj);
     }
 }

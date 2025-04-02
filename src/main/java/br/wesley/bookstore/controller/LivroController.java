@@ -36,4 +36,11 @@ public class LivroController {
         Livro newObj = livroService.update(id, obj);
         return ResponseEntity.ok().body(newObj);
     }
+
+    @PostMapping
+    public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0")
+                                        Long id_cat, @RequestBody Livro obj) {
+        Livro newObj = livroService.create(id_cat, obj);
+        return ResponseEntity.status(201).body(newObj);
+    }
 }

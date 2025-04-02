@@ -23,12 +23,24 @@ public class LivroService {
 
     public Livro findById(Long id) {
         Optional<Livro> obj = livroRepository.findById(id);
-        return obj.orElseThrow(()-> new ObjectNotFoundException(
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado ! id: " + id + " Tipo: " + Livro.class.getName()));
     }
 
     public List<Livro> findAll(Long id_cat) {
         categoriaService.findById(id_cat);
         return livroRepository.findAllByCategoria(id_cat);
+    }
+
+    public Livro update(Long id, Livro obj) {
+        Livro newObj = findById(id);
+        updateData(newObj, obj);
+        return livroRepository.save(newObj);
+    }
+
+    private void updateData(Livro newObj, Livro obj) {
+        newObj.setTitulo(obj.setTitulo());
+        newObj.setNome_autor(obj.getNome_autor());
+        newObj.setTexto(obj.getTexto());
     }
 }

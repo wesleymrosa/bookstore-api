@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "v1/categorias")
@@ -36,10 +37,17 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj) {
-        obj = categoriaService.create(obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<CategoriaDto> create(@Valid @RequestBody CategoriaDto dto) {
+
+        Categoria obj = new Categoria();
+        obj.setId(null); // Isso é crucial!
+        obj.setNome(dto.getNome());
+        obj.setDescricao(dto.getDescricao());
+
+        Categoria saved = categoriaService.create(obj);
+        return ResponseEntity.ok().body(new CategoriaDto(saved));
     }
+
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<CategoriaDto> update(@PathVariable Long id, @Valid @RequestBody CategoriaDto objDto) {
@@ -53,3 +61,18 @@ public class CategoriaController {
         return ResponseEntity.noContent().build();
     }
 }
+
+
+//    @PostMapping
+//    public ResponseEntity<CategoriaDto> create(@Valid @RequestBody CategoriaDto dto) {
+//        Categoria obj = new Categoria(null, dto.getNome(), dto.getDescricao(), new ArrayList<>());
+//        Categoria saved = categoriaService.create(obj);
+//        return ResponseEntity.ok().body(new CategoriaDto(saved));
+//    }
+
+
+//    @PostMapping
+//    public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj) {
+//        obj = categoriaService.create(obj);
+//        return ResponseEntity.ok().body(obj);
+//    }

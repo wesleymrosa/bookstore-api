@@ -1,5 +1,7 @@
 package br.wesley.bookstore.domain;
 
+import br.wesley.bookstore.dtos.CategoriaDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,24 +27,39 @@ public class Categoria implements Serializable {
     @NotEmpty(message = "Campo descrição é obrigatório !")
     @Length(min = 3, max = 300, message = "O campo descrição deve ter entre 3 e 300 caracteres.")
     private String descricao;
-
+    @JsonIgnore
     private List<Livro> livros = new ArrayList<>();
 
     public Categoria() {
     }
 
-    public Categoria(String nome, String descricao, List<Livro> livros) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.livros = livros;
+//    public Categoria(String nome, String descricao, List<Livro> livros) {
+//        this.nome = nome;
+//        this.descricao = descricao;
+//        this.livros = livros;
+//    }
+//
+//    public Categoria(Long id, String nome, String descricao, List<Livro> livros) {
+//        this.id = id;
+//        this.nome = nome;
+//        this.descricao = descricao;
+//        this.livros = livros;
+//    }
+//
+//    public Categoria(CategoriaDto dto) {
+//        this.id = dto.getId();
+//        this.nome = dto.getNome();
+//        this.descricao = dto.getDescricao();
+//        this.livros = new ArrayList<>();
+//    }
+
+    public Categoria(CategoriaDto dto) {
+        this.id = null; // ← Isso impede o erro de duplicidade
+        this.nome = dto.getNome();
+        this.descricao = dto.getDescricao();
+        this.livros = new ArrayList<>();
     }
 
-    public Categoria(Long id, String nome, String descricao, List<Livro> livros) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.livros = livros;
-    }
 
     public Long getId() {
         return id;
@@ -68,6 +85,7 @@ public class Categoria implements Serializable {
         this.descricao = descricao;
     }
 
+    @JsonIgnore
     public List<Livro> getLivros() {
         return livros;
     }
@@ -99,3 +117,6 @@ public class Categoria implements Serializable {
                 '}';
     }
 }
+
+
+

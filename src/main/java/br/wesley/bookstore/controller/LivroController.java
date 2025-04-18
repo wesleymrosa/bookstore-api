@@ -1,14 +1,13 @@
 package br.wesley.bookstore.controller;
 
 import br.wesley.bookstore.domain.Livro;
-import br.wesley.bookstore.dtos.LivroDto;
 import br.wesley.bookstore.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "v1/livros")
@@ -26,11 +25,18 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroDto>> findAll(@RequestParam(value = "categoria", defaultValue = "0") Long id_cat) {
+    public ResponseEntity<List<Livro>> findAll(@RequestParam(value = "categoria") Long id_cat) {
         List<Livro> list = livroService.findAll(id_cat);
-        List<LivroDto> listDto = list.stream().map(obj -> new LivroDto(obj)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+        return ResponseEntity.ok().body(list);
     }
+
+
+//    @GetMapping
+//    public ResponseEntity<List<LivroDto>> findAll(@RequestParam(value = "categoria", defaultValue = "0") Long id_cat) {
+//        List<Livro> list = livroService.findAll(id_cat);
+//        List<LivroDto> listDto = list.stream().map(obj -> new LivroDto(obj)).collect(Collectors.toList());
+//        return ResponseEntity.ok().body(listDto);
+//    }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Livro> update(@PathVariable Long id, @Valid @RequestBody Livro obj) {

@@ -31,13 +31,6 @@ public class LivroController {
     }
 
 
-//    @GetMapping
-//    public ResponseEntity<List<LivroDto>> findAll(@RequestParam(value = "categoria", defaultValue = "0") Long id_cat) {
-//        List<Livro> list = livroService.findAll(id_cat);
-//        List<LivroDto> listDto = list.stream().map(obj -> new LivroDto(obj)).collect(Collectors.toList());
-//        return ResponseEntity.ok().body(listDto);
-//    }
-
     @PutMapping(value = "/{id}")
     public ResponseEntity<Livro> update(@PathVariable Long id, @Valid @RequestBody Livro obj) {
         Livro newObj = livroService.update(id, obj);

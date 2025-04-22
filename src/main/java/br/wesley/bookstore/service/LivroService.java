@@ -33,12 +33,6 @@ public class LivroService {
         return livroRepository.findAllByCategoria(categoria);
     }
 
-
-//    public List<Livro> findAll(Long id_cat) {
-//        categoriaService.findById(id_cat);
-//        return livroRepository.findAllByCategoria(id_cat);
-//    }
-
     public Livro update(Long id, Livro obj) {
         Livro newObj = findById(id);
         updateData(newObj, obj);

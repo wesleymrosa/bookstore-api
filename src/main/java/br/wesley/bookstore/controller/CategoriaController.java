@@ -61,18 +61,3 @@ public class CategoriaController {
         return ResponseEntity.noContent().build();
     }
 }
-
-
-//    @PostMapping
-//    public ResponseEntity<CategoriaDto> create(@Valid @RequestBody CategoriaDto dto) {
-//        Categoria obj = new Categoria(null, dto.getNome(), dto.getDescricao(), new ArrayList<>());
-//        Categoria saved = categoriaService.create(obj);
-//        return ResponseEntity.ok().body(new CategoriaDto(saved));
-//    }
-
-
-//    @PostMapping
-//    public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj) {
-//        obj = categoriaService.create(obj);
-//        return ResponseEntity.ok().body(obj);
-//    }

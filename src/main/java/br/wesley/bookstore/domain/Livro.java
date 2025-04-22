@@ -1,6 +1,6 @@
 package br.wesley.bookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
@@ -11,24 +11,27 @@ import java.util.Objects;
 @Entity
 public class Livro implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty(message = "Campo título é obrigatório !")
     @Length(min = 3, max = 50, message = "O campo título deve ter entre 3 e 50 caracteres.")
     private String titulo;
+
     @NotEmpty(message = "Campo nome_autor é obrigatório !")
     @Length(min = 3, max = 50, message = "O campo nome_autor deve ter entre 3 e 50 caracteres.")
     private String nome_autor;
+
     @NotEmpty(message = "Campo texto é obrigatório !")
     @Length(min = 10, max = 2000000, message = "O campo texto deve ter entre 10 e 2.000.000 caracteres.")
     private String texto;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
-
 
     public Livro() {
         super();

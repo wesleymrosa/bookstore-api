@@ -1,11 +1,7 @@
 package br.wesley.bookstore.domain;
 
-import br.wesley.bookstore.dtos.CategoriaDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
@@ -21,46 +17,28 @@ public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty(message = "Campo nome é obrigatório !")
     @Length(min = 3, max = 100, message = "O campo nome deve ter entre 3 e 100 caracteres.")
     private String nome;
+
     @NotEmpty(message = "Campo descrição é obrigatório !")
     @Length(min = 3, max = 300, message = "O campo descrição deve ter entre 3 e 300 caracteres.")
     private String descricao;
-    @JsonIgnore
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>();
 
-    public Categoria() {
+    public Categoria() {}
+
+    public Categoria(Long id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
-//    public Categoria(String nome, String descricao, List<Livro> livros) {
-//        this.nome = nome;
-//        this.descricao = descricao;
-//        this.livros = livros;
-//    }
-//
-//    public Categoria(Long id, String nome, String descricao, List<Livro> livros) {
-//        this.id = id;
-//        this.nome = nome;
-//        this.descricao = descricao;
-//        this.livros = livros;
-//    }
-//
-//    public Categoria(CategoriaDto dto) {
-//        this.id = dto.getId();
-//        this.nome = dto.getNome();
-//        this.descricao = dto.getDescricao();
-//        this.livros = new ArrayList<>();
-//    }
-
-    public Categoria(CategoriaDto dto) {
-        this.id = null; // ← Isso impede o erro de duplicidade
-        this.nome = dto.getNome();
-        this.descricao = dto.getDescricao();
-        this.livros = new ArrayList<>();
-    }
-
-
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -85,7 +63,6 @@ public class Categoria implements Serializable {
         this.descricao = descricao;
     }
 
-    @JsonIgnore
     public List<Livro> getLivros() {
         return livros;
     }
@@ -97,9 +74,9 @@ public class Categoria implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return id.equals(categoria.id);
+        if (!(o instanceof Categoria)) return false;
+        Categoria that = (Categoria) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
@@ -113,10 +90,6 @@ public class Categoria implements Serializable {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
-                ", livros=" + livros +
                 '}';
     }
 }
-
-
-

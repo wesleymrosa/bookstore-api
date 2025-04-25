@@ -3,7 +3,9 @@
 
 ## 📅 Visão Geral
 
-O **Bookstore API** é um sistema desenvolvido em **Java 17 com Spring Boot 3.4.4** que permite o gerenciamento de **categorias e livros**. A aplicação fornece uma API RESTful para cadastro, edição, exclusão e consulta de livros, organizados por categorias, com persistência em banco de dados PostgreSQL.
+O **Bookstore API** é um sistema desenvolvido em **Java 17 com Spring Boot 3.4.4** que permite o gerenciamento de **categorias e livros**. 
+
+A aplicação fornece uma API RESTful para cadastro, edição, exclusão e consulta de livros, organizados por categorias, com persistência em banco de dados PostgreSQL.
 
 O projeto segue uma arquitetura tradicional e bem estruturada, baseada em camadas, garantindo alta manutenção, escalabilidade e clareza de código.
 
@@ -93,7 +95,7 @@ br.wesley.bookstore
 ### 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/bookstore-api.git
+git clone https://github.com/wesleymrosa/bookstore-api.git
 cd bookstore-api
 ```
 

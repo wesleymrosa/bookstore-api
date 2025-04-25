@@ -155,9 +155,15 @@ http://localhost:8082/swagger-ui/index.html
 http://localhost:8082/swagger-ui/index.html
 ```
 
-### ✅ Via Postman
+### ✅ Via Navegador (métodos GET)
 
-GET, POST, PUT, DELETE nos endpoints `/categorias` e `/livros`
+```bash
+http://localhost:8082/categorias                # Listar todas as categorias
+http://localhost:8082/categorias/1              # Buscar categoria por ID
+http://localhost:8082/livros?categoria=1        # Listar livros por categoria
+http://localhost:8082/livros/1                  # Buscar livro por ID
+http://localhost:8082/swagger-ui/index.html     # Swagger UI interativo
+````
 
 ### ✅ Via cURL
 

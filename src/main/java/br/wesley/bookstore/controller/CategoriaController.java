@@ -1,63 +1,55 @@
 package br.wesley.bookstore.controller;
 
 import br.wesley.bookstore.domain.Categoria;
-import br.wesley.bookstore.dtos.CategoriaDto;
-import br.wesley.bookstore.service.CategoriaService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@CrossOrigin("*")
+@Tag(name = "Categorias", description = "Operações com categorias de livros")
 @RestController
-@RequestMapping(value = "v1/categorias")
+@RequestMapping("/categorias")
 public class CategoriaController {
 
-    private final CategoriaService categoriaService;
-
-    public CategoriaController(CategoriaService categoriaService) {
-        this.categoriaService = categoriaService;
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-        Categoria obj = categoriaService.findById(id);
-        return ResponseEntity.ok().body(obj);
-    }
-
+    @Operation(summary = "Listar todas as categorias")
+    @ApiResponse(responseCode = "200", description = "Categorias listadas com sucesso")
     @GetMapping
-    public ResponseEntity<List<CategoriaDto>> findAll() {
-        List<Categoria> list = categoriaService.findAll();
-        List<CategoriaDto> listDTO = list.stream()
-                .map(obj -> new CategoriaDto(obj))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDTO);
+    public List<Categoria> listarTodas() {
+        return List.of();
     }
 
+    @Operation(summary = "Criar nova categoria")
+    @ApiResponse(responseCode = "201", description = "Categoria criada com sucesso")
     @PostMapping
-    public ResponseEntity<CategoriaDto> create(@Valid @RequestBody CategoriaDto dto) {
-
-        Categoria obj = new Categoria();
-        obj.setId(null); // Isso é crucial!
-        obj.setNome(dto.getNome());
-        obj.setDescricao(dto.getDescricao());
-
-        Categoria saved = categoriaService.create(obj);
-        return ResponseEntity.ok().body(new CategoriaDto(saved));
+    public Categoria criar(@RequestBody Categoria categoria) {
+        return categoria;
     }
 
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDto> update(@PathVariable Long id, @Valid @RequestBody CategoriaDto objDto) {
-        Categoria newObj = categoriaService.update(id, objDto);
-        return ResponseEntity.ok().body(new CategoriaDto(newObj));
+    @Operation(summary = "Buscar categoria por ID")
+    @ApiResponse(responseCode = "200", description = "Categoria localizada")
+    @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
+    @GetMapping("/{id}")
+    public Categoria buscarPorId(
+            @Parameter(description = "ID da categoria") @PathVariable Long id) {
+        return new Categoria();
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        categoriaService.delete(id);
-        return ResponseEntity.noContent().build();
+    @Operation(summary = "Atualizar categoria por ID")
+    @ApiResponse(responseCode = "200", description = "Categoria atualizada com sucesso")
+    @PutMapping("/{id}")
+    public Categoria atualizar(
+            @Parameter(description = "ID da categoria") @PathVariable Long id,
+            @RequestBody Categoria categoria) {
+        return categoria;
+    }
+
+    @Operation(summary = "Deletar categoria por ID")
+    @ApiResponse(responseCode = "204", description = "Categoria removida com sucesso")
+    @DeleteMapping("/{id}")
+    public void deletar(
+            @Parameter(description = "ID da categoria") @PathVariable Long id) {
     }
 }

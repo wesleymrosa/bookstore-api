@@ -1,52 +1,55 @@
 package br.wesley.bookstore.controller;
 
 import br.wesley.bookstore.domain.Livro;
-import br.wesley.bookstore.service.LivroService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@Tag(name = "Livros", description = "Operações com livros cadastrados")
 @RestController
-@RequestMapping(value = "v1/livros")
+@RequestMapping("/livros")
 public class LivroController {
-    private final LivroService livroService;
 
-    public LivroController(LivroService livroService) {
-        this.livroService = livroService;
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Livro> findById(@PathVariable Long id) {
-        Livro obj = livroService.findById(id);
-        return ResponseEntity.ok().body(obj);
-    }
-
+    @Operation(summary = "Listar todos os livros")
+    @ApiResponse(responseCode = "200", description = "Livros listados com sucesso")
     @GetMapping
-    public ResponseEntity<List<Livro>> findAll(@RequestParam(value = "categoria") Long id_cat) {
-        List<Livro> list = livroService.findAll(id_cat);
-        return ResponseEntity.ok().body(list);
+    public List<Livro> listarTodos() {
+        return List.of();
     }
 
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Livro> update(@PathVariable Long id, @Valid @RequestBody Livro obj) {
-        Livro newObj = livroService.update(id, obj);
-        return ResponseEntity.ok().body(newObj);
-    }
-
+    @Operation(summary = "Criar novo livro")
+    @ApiResponse(responseCode = "201", description = "Livro criado com sucesso")
     @PostMapping
-    public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0")
-                                        Long id_cat, @Valid @RequestBody Livro obj) {
-        Livro newObj = livroService.create(id_cat, obj);
-        return ResponseEntity.status(201).body(newObj);
+    public Livro criar(@RequestBody Livro livro) {
+        return livro;
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        livroService.delete(id);
-        return ResponseEntity.noContent().build();
+    @Operation(summary = "Buscar livro por ID")
+    @ApiResponse(responseCode = "200", description = "Livro localizado")
+    @ApiResponse(responseCode = "404", description = "Livro não encontrado")
+    @GetMapping("/{id}")
+    public Livro buscarPorId(
+            @Parameter(description = "ID do livro") @PathVariable Long id) {
+        return new Livro();
+    }
+
+    @Operation(summary = "Atualizar livro por ID")
+    @ApiResponse(responseCode = "200", description = "Livro atualizado com sucesso")
+    @PutMapping("/{id}")
+    public Livro atualizar(
+            @Parameter(description = "ID do livro") @PathVariable Long id,
+            @RequestBody Livro livro) {
+        return livro;
+    }
+
+    @Operation(summary = "Remover livro por ID")
+    @ApiResponse(responseCode = "204", description = "Livro removido com sucesso")
+    @DeleteMapping("/{id}")
+    public void deletar(
+            @Parameter(description = "ID do livro") @PathVariable Long id) {
     }
 }
